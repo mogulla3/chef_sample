@@ -8,7 +8,10 @@
 #
 
 # Install MySQL
-
+package "mysql" do
+  action :install
+  version "5.5.36"
+end
 
 # Install PHP
 

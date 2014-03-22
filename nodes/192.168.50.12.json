@@ -1,1 +1,1 @@
-{  "run_list":[    "recipe[nginx]"  ]}
+{  "run_list":[    "yum::epel",    "yum::remi",    "recipe[webapi]"  ]}
