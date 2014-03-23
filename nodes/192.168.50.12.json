@@ -3,9 +3,17 @@
     "yum",
     "recipe[mysql55]",
     "recipe[apache22]",
-    "recipe[php54]"
+    "recipe[php54]",
+    "recipe[memcached]"
   ],
   "php": {
     "extensions": ["pthreads.so"]
+  },
+  "memcached": {
+    "port": 11211,
+    "user": "memcached",
+    "maxconn": 4096,
+    "cachesize": 512,
+    "options": "-l 192.168.1.15"
   }
 }
