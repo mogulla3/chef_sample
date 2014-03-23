@@ -2,6 +2,7 @@
   "run_list":[
     "yum",
     "recipe[mysql55]",
-    "recipe[apache22]"
+    "recipe[apache22]",
+    "recipe[php54]"
   ]
 }
