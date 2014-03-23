@@ -12,7 +12,10 @@
 
 # xml2-config
 pkgs = %w(gcc make zlib-devel readline-devel libxml2-devel openssl-devel curl-devel bzip2-devel)
+filename = "php-5.4.0.tar.bz2"
+remote_uri = "http://museum.php.net/php5/php-5.4.0.tar.bz2";
 
+# パッケージのインストール
 pkgs.each do |pkg|
   package pkg do
     action :install
@@ -25,13 +28,12 @@ package "libmcrypt-devel" do
   options "--enablerepo=epel"
 end
 
-filename = "php-5.4.0.tar.bz2"
-remote_uri = "http://museum.php.net/php5/php-5.4.0.tar.bz2";
-
+# ソースの取得
 remote_file "/usr/src/#{filename}" do
   source "#{remote_uri}"
 end
 
+# インストール
 bash "install_php54" do
   not_if "which php"
   cwd "/usr/src"
@@ -40,6 +42,25 @@ bash "install_php54" do
     tar jxf #{filename}
     cd php-5.4.0
     ./configure --prefix=/usr --enable-maintainer-zts --with-pear --with-config-file-path=/etc --with-readline --with-mcrypt --with-zlib -enable-mbstring --with-curl --with-bz2 --enable-zip --enable-sockets --enable-sysvsem --enable-sysvshm --with-mhash --with-pcre-regex --with-gettext --enable-bcmath --enable-libxml --enable-json --with-openssl --enable-pcntl
-    make && make test && make install
+    make && make install
   EOL
+end
+
+# 拡張ライブラリのインストール
+bash "install_pthreads" do
+  not_if "pecl list | grep pthreads"
+
+  code <<-EOL
+    pecl install channel://pecl.php.net/pthreads-0.0.44
+  EOL
+end
+
+# 設定ファイル
+template "php.ini" do
+  path "/etc/php.ini"
+  source "php.ini.erb"
+  owner "root"
+  group "root"
+  mode 0644
+  notifies :reload, 'service[httpd]'
 end

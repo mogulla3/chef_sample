@@ -4,5 +4,8 @@
     "recipe[mysql55]",
     "recipe[apache22]",
     "recipe[php54]"
-  ]
+  ],
+  "php": {
+    "extensions": ["pthreads.so"]
+  }
 }
