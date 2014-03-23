@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: webapi
+# Cookbook Name:: mysql55
 # Recipe:: default
 #
 # Copyright 2014, YOUR_COMPANY_NAME
@@ -33,13 +33,3 @@ package "mysql" do
   action :install
   options "--enablerepo=remi"
 end
-
-# Install PHP
-
-
-# Install Apache
-
-
-# Install memcached
-
-
