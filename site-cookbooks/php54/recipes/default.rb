@@ -11,9 +11,10 @@
 # not_if: 評価結果が偽の時に実行する
 
 # xml2-config
-pkgs = %w(gcc make zlib-devel readline-devel libxml2-devel openssl-devel curl-devel bzip2-devel)
-filename = "php-5.4.0.tar.bz2"
+filename   = "php-5.4.0.tar.bz2"
 remote_uri = "http://museum.php.net/php5/php-5.4.0.tar.bz2";
+pkgs       = %w(gcc make zlib-devel readline-devel libxml2-devel openssl-devel curl-devel bzip2-devel)
+php_exts   = %w(php-pear php-pecl-memcache php-mysql)
 
 # パッケージのインストール
 pkgs.each do |pkg|
@@ -47,6 +48,12 @@ bash "install_php54" do
 end
 
 # 拡張ライブラリのインストール
+php_exts.each do |ext|
+  package ext do
+    action :install
+  end
+end
+
 bash "install_pthreads" do
   not_if "pecl list | grep pthreads"
 
