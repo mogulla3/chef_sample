@@ -1,1 +1,7 @@
-{  "run_list":[    "yum",    "recipe[mysql55]"  ]}
+{
+  "run_list":[
+    "yum",
+    "recipe[mysql55]",
+    "recipe[apache22]"
+  ]
+}
